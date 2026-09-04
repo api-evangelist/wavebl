@@ -1,0 +1,34 @@
+generated: '2026-09-04'
+method: searched
+source: >-
+  Read of every page in the wavebl.com page sitemap for a documented limit, the archived WaveBL
+  help-centre "API Integrations" section, plus anonymous response-header inspection of the WaveBL
+  API Gateway hosts on 2026-09-04.
+limit_count: 0
+limits: []
+response_headers: []
+exhaustion_status: null
+evidence:
+- url: https://wavebl.com/security/
+  status: 200
+  note: >-
+    WaveBL names "rate limiting" as a platform security feature, with no scope, window, quota,
+    header or exhaustion status attached — a capability claim, not a published limit.
+- url: https://coa.wavebl.com/coadocuments/search
+  status: 403
+  note: >-
+    AWS API Gateway responds {"message":"Missing Authentication Token"}. The response carries
+    x-amz-apigw-id, x-amzn-requestid and x-amzn-errortype but no X-RateLimit-*, no RateLimit-* and
+    no Retry-After, so no runtime rate-limit signal is observable anonymously.
+- url: https://prod-registration.api.wavebl.com/
+  status: 403
+  note: same AWS API Gateway envelope, no rate-limit headers
+- url: https://prod-logingate.api.wavebl.com/
+  status: 403
+  note: same AWS API Gateway envelope, no rate-limit headers
+note: >-
+  WaveBL documents no rate limits anywhere on its public surface — there is no developer portal, no
+  API reference and no published contract in which a limit could be stated — and its live API
+  Gateway hosts emit no rate-limit headers to an anonymous caller. An honest zero. Note that AWS API
+  Gateway's own default throttling and 429 behaviour applies to these hosts, but WaveBL states no
+  quota, so nothing is asserted here.

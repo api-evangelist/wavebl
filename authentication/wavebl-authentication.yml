@@ -1,0 +1,105 @@
+generated: '2026-09-04'
+method: probed
+source: >-
+  WaveBL's own production login bundle
+  (https://ib.prod.wavebl.com/static/js/main.92f24860.chunk.js), the OpenID Connect discovery
+  document served at https://wsupport.wavebl.com/.well-known/openid-configuration, and anonymous
+  probes of the WaveBL API Gateway hosts on 2026-09-04.
+summary: >-
+  WaveBL documents no API authentication anywhere. There is no OpenAPI to derive securitySchemes
+  from and no auth page on any public property. What can be established anonymously is the identity
+  machinery behind WaveBL's own web properties, recorded below as observed fact rather than as a
+  documented API contract.
+api_authentication:
+  documented: false
+  schemes: []
+  note: >-
+    No API key, token, OAuth flow, mTLS profile or signing scheme is published for any WaveBL API.
+    The one reachable API surface, https://coa.wavebl.com/coadocuments/*, rejects anonymous GET and
+    OPTIONS with HTTP 403 {"message":"Missing Authentication Token"} — the AWS API Gateway response
+    for an undefined method, which carries no WWW-Authenticate challenge, so even the scheme cannot
+    be inferred from the outside. Partner integrations against the DCSA eBL Issuance and Surrender
+    Response APIs are provisioned through WaveBL sales and support; no credential-issuance
+    documentation is public.
+observed_identity_surfaces:
+- surface: WaveBL platform login (ib.prod.wavebl.com)
+  type: oauth2
+  flow: authorization_code
+  provider: Amazon Cognito user pools via the AWS Amplify Identity Broker
+  region: eu-west-1
+  hosted_ui_domain: wave-identity-broker-prod.auth.eu-west-1.amazoncognito.com
+  scopes:
+  - phone
+  - email
+  - openid
+  - profile
+  - aws.cognito.signin.user.admin
+  username_attribute: email
+  mfa: optional
+  mfa_types:
+  - SMS
+  - TOTP
+  password_min_length: 8
+  evidence:
+  - url: https://ib.prod.wavebl.com/
+    status: 200
+    note: >-
+      Page title "WaveBL Login". Its production bundle carries the Amplify configuration block
+      naming the Cognito region, the identity-broker API endpoint, the hosted-UI domain, the OAuth
+      scope set, responseType "code" and the MFA/password policy quoted above. Client and pool
+      identifiers are deliberately NOT recorded here.
+  - url: https://wave-identity-broker-prod.auth.eu-west-1.amazoncognito.com/oauth2/authorize
+    status: 400
+    note: >-
+      Live Cognito hosted UI — a bare authorize request without client_id returns the Cognito error
+      page, confirming the authorization server exists.
+  - url: https://wave-identity-broker-prod.auth.eu-west-1.amazoncognito.com/.well-known/openid-configuration
+    status: 404
+    note: >-
+      Cognito hosted-UI domains do not publish discovery; the pool's OIDC metadata is served by AWS
+      at cognito-idp.eu-west-1.amazonaws.com (HTTP 200), not by WaveBL.
+- surface: WaveBL support community (wsupport.wavebl.com)
+  type: openIdConnect
+  provider: Salesforce Experience Cloud
+  discovery: https://wsupport.wavebl.com/.well-known/openid-configuration
+  issuer: https://wsupport.wavebl.com
+  token_endpoint_auth_methods:
+  - client_secret_post
+  - client_secret_basic
+  - private_key_jwt
+  id_token_signing_alg: RS256
+  dynamic_registration: true
+  evidence:
+  - url: https://wsupport.wavebl.com/.well-known/openid-configuration
+    status: 200
+    note: >-
+      Full OIDC discovery document saved verbatim to
+      well-known/wavebl-wsupport-openid-configuration.json. This is the support portal's identity
+      surface, not an API authorization server for the eBL platform.
+- surface: WaveBL API Gateway hosts
+  type: unknown
+  evidence:
+  - url: https://coa.wavebl.com/coadocuments/search
+    status: 403
+  - url: https://prod-registration.api.wavebl.com/
+    status: 403
+  - url: https://prod-logingate.api.wavebl.com/
+    status: 403
+  - url: https://prod-coa.api.wavebl.com/
+    status: 403
+  - url: https://wave-ai-staging.rnd.wavebl.com/openapi.json
+    status: 403
+  note: >-
+    Every one answers {"message":"Missing Authentication Token"} with no WWW-Authenticate header.
+    AWS API Gateway returns this identically for an unauthenticated request and for a method that
+    does not exist, so it establishes only that the hosts are live API Gateways.
+scopes:
+  documented: false
+  note: >-
+    No OAuth scope reference is published for any WaveBL API. The Cognito scope set recorded above
+    is the sign-in scope set for the platform's own web client, not an API permission model, so no
+    scopes/ artifact is written and no OAuthScopes pointer is emitted.
+pointer_policy: >-
+  An Authentication pointer IS emitted against this file, because it records a real, evidenced
+  authentication posture measured from WaveBL's own production surface. It should not be read as
+  WaveBL having documented API authentication — it has not.

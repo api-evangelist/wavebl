@@ -1,0 +1,27 @@
+generated: '2026-09-04'
+method: probed
+source: live DNS/TLS/HTTP probes of apis.yml + OpenAPI hosts
+hosts:
+- host: wavebl.com
+  https: true
+  tls_version: TLSv1.3
+  cert_expires: Oct 28 16:23:11 2026 GMT
+  hsts: false
+- host: coa.wavebl.com
+  https: true
+  tls_version: TLSv1.3
+  cert_expires: Feb  9 23:59:59 2027 GMT
+  hsts: false
+domains:
+- domain: wavebl.com
+  dnssec: false
+  caa:
+  - 0 issue "awstrust.com"
+  - 0 issue "comodoca.com"
+  - 0 issue "digicert.com"
+  - 0 issue "globalsign.com"
+  - 0 issue "letsencrypt.org"
+  - 0 issue "sectigo.com"
+  spf: true
+  dmarc: true
+  dmarc_policy: none

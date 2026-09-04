@@ -1,0 +1,194 @@
+generated: '2026-09-04'
+method: probed
+source: >-
+  Anonymous HTTP probes of /.well-known/* on every WaveBL host this pass discovered — the
+  WordPress apex and www, the Certificate of Authenticity app, the Salesforce Experience Cloud
+  support community and its cs.wavebl.com alias, the registration app host and the legal-document
+  CDN — on 2026-09-04.
+summary: >-
+  One real document is served: wsupport.wavebl.com returns an RFC 8414 / OpenID Connect discovery
+  document at /.well-known/openid-configuration (HTTP 200, application/json, 2,457 bytes), the
+  Salesforce Experience Cloud identity surface behind WaveBL's customer support community. Every
+  other path on every other host misses. The WordPress apex returns genuine 404s; coa, register and
+  docs are S3/CloudFront origins that answer 403 AccessDenied for everything; cs.wavebl.com is a
+  redirect into the same Salesforce community and answers 200 with a 436KB SPA shell for every path
+  including a nonsense control probe, so its 200s are catch-alls and NOT documents.
+hit_count: 1
+soft_404_control:
+  note: >-
+    A deliberate nonsense path (/.well-known/zzz-control-probe-9182) was requested on every host.
+    Where it returned the same status and body shape as the real paths, those responses are
+    catch-alls and no document exists.
+  probes:
+  - host: https://wavebl.com
+    path: /.well-known/zzz-control-probe-9182
+    status: 404
+    bytes: 141661
+    body_sha256_prefix: 0b52c86d5479
+    note: WordPress 404 template — genuine miss, matches every real path probed here
+  - host: https://cs.wavebl.com
+    path: /.well-known/zzz-control-probe-9182
+    status: 200
+    bytes: 436550
+    body_sha256_prefix: 1a7acd1898ff
+    note: >-
+      Salesforce community SPA shell returned for every path — a 200 here is NOT a document
+  - host: https://wsupport.wavebl.com
+    path: /.well-known/zzz-control-probe-9182
+    status: 401
+    bytes: 612
+    body_sha256_prefix: 21e981b71e94
+    note: >-
+      Control probe is REJECTED (401) while /.well-known/openid-configuration returns a 200 JSON
+      body with a different hash (d83bbfa666bb) — the hit is a real document, not a catch-all
+  - host: https://coa.wavebl.com
+    path: /.well-known/zzz-control-probe-9182
+    status: 403
+    bytes: 111
+    body_sha256_prefix: a824bc7739e2
+    note: S3 AccessDenied for every path
+hosts:
+- host: https://wavebl.com
+  note: WordPress apex (Elementor). Genuine 404s — no catch-all.
+  documents:
+  - path: /.well-known/security.txt
+    status: 404
+  - path: /.well-known/openid-configuration
+    status: 404
+  - path: /.well-known/oauth-authorization-server
+    status: 404
+  - path: /.well-known/api-catalog
+    status: 404
+  - path: /.well-known/ai-plugin.json
+    status: 404
+  - path: /.well-known/agent-card.json
+    status: 404
+  - path: /.well-known/agent.json
+    status: 404
+  - path: /llms.txt
+    status: 404
+- host: https://www.wavebl.com
+  note: Redirects to the apex; identical results.
+  documents:
+  - path: /.well-known/security.txt
+    status: 404
+  - path: /.well-known/openid-configuration
+    status: 404
+  - path: /.well-known/oauth-authorization-server
+    status: 404
+  - path: /.well-known/api-catalog
+    status: 404
+  - path: /.well-known/ai-plugin.json
+    status: 404
+  - path: /.well-known/agent-card.json
+    status: 404
+  - path: /.well-known/agent.json
+    status: 404
+- host: https://wsupport.wavebl.com
+  note: >-
+    WaveBL customer support community on Salesforce Experience Cloud. The OIDC discovery document
+    is served by the Salesforce platform but on a host WaveBL controls, and it is the only
+    /.well-known document served anywhere on the WaveBL estate. All other paths are 401.
+  documents:
+  - path: /.well-known/openid-configuration
+    status: 200
+    file: wavebl-wsupport-openid-configuration.json
+  - path: /.well-known/security.txt
+    status: 401
+  - path: /.well-known/oauth-authorization-server
+    status: 401
+  - path: /.well-known/api-catalog
+    status: 401
+  - path: /.well-known/ai-plugin.json
+    status: 401
+  - path: /.well-known/agent-card.json
+    status: 401
+  - path: /.well-known/agent.json
+    status: 401
+- host: https://cs.wavebl.com
+  note: >-
+    CloudFront alias that redirects into the Salesforce community contact form. Every path returns
+    the same 436,550-byte SPA shell, control probe included — NOT documents, nothing saved.
+  documents:
+  - path: /.well-known/zzz-control-probe-9182
+    status: 200
+    catch_all: true
+- host: https://coa.wavebl.com
+  note: S3/CloudFront origin for the Certificate of Authenticity app. 403 AccessDenied for every path.
+  documents:
+  - path: /.well-known/security.txt
+    status: 403
+  - path: /.well-known/openid-configuration
+    status: 403
+  - path: /.well-known/oauth-authorization-server
+    status: 403
+  - path: /.well-known/api-catalog
+    status: 403
+  - path: /.well-known/ai-plugin.json
+    status: 403
+  - path: /.well-known/agent-card.json
+    status: 403
+  - path: /.well-known/agent.json
+    status: 403
+- host: https://register.wavebl.com
+  note: S3/CloudFront origin for the registration app. 403 AccessDenied for every path.
+  documents:
+  - path: /.well-known/security.txt
+    status: 403
+  - path: /.well-known/openid-configuration
+    status: 403
+  - path: /.well-known/oauth-authorization-server
+    status: 403
+  - path: /.well-known/api-catalog
+    status: 403
+  - path: /.well-known/ai-plugin.json
+    status: 403
+  - path: /.well-known/agent-card.json
+    status: 403
+  - path: /.well-known/agent.json
+    status: 403
+- host: https://docs.wavebl.com
+  note: >-
+    Not a documentation host despite the name — a CloudFront/S3 origin that has only ever served
+    WaveBL's legal documents (Wave_bylaws_v2.0.html, Wave_Privacy_Policy.html,
+    Wave_Cookie_Policy.html per the Internet Archive). Root and every probed path return 403
+    AccessDenied.
+  documents:
+  - path: /.well-known/security.txt
+    status: 403
+  - path: /.well-known/openid-configuration
+    status: 403
+  - path: /.well-known/oauth-authorization-server
+    status: 403
+  - path: /.well-known/api-catalog
+    status: 403
+  - path: /.well-known/agent-card.json
+    status: 403
+  - path: /.well-known/agent.json
+    status: 403
+  - path: /llms.txt
+    status: 403
+- host: https://wave-identity-broker-prod.auth.eu-west-1.amazoncognito.com
+  note: >-
+    Third-party authorization-server host named by WaveBL's own production login bundle (the AWS
+    Amplify Identity Broker configuration in ib.prod.wavebl.com/static/js/main.92f24860.chunk.js).
+    Probed per the rule that an auth server often lives on a host other than the primary domain.
+    Amazon Cognito hosted-UI domains do not serve discovery documents; the pool's OIDC metadata is
+    served by AWS at cognito-idp.eu-west-1.amazonaws.com instead. Recorded, but NOT a WaveBL-served
+    document and not counted in hit_count.
+  documents:
+  - path: /.well-known/openid-configuration
+    status: 404
+  - path: /.well-known/jwks.json
+    status: 404
+agent_card:
+  found: false
+  note: >-
+    /.well-known/agent-card.json and the legacy /.well-known/agent.json were probed on every host
+    above. No host returned a 200 carrying an AgentCard-shaped JSON object, so NO a2a/ artifact and
+    NO AgentCard pointer is written — an agent card asserts that the provider serves it and may
+    never be authored on their behalf.
+pointer_policy: >-
+  A WellKnown pointer IS emitted, because one path (wsupport.wavebl.com
+  /.well-known/openid-configuration) returned HTTP 200 carrying a real, parseable discovery
+  document. NO SecurityTxt pointer is emitted — /.well-known/security.txt is absent on every host.

@@ -1,0 +1,67 @@
+generated: '2026-09-04'
+method: searched
+source: https://wavebl.com/pricing-page/
+plan_count: 4
+pricing_model: usage-based-with-sales-gated-tiers
+currency: null
+plans:
+- name: SMB
+  audience: 1 branch
+  price: null
+  currency: null
+  billing_period: null
+  pricing_text: Pay as you go
+  minimum_fee: none
+  included_quota: null
+  overage: null
+  onboarding: self-serve sign up
+  signup_url: https://register.wavebl.com/wavebl/?trustedOrganizationCode=Generic
+- name: Enterprise - Basic
+  audience: up to 3 branches
+  price: null
+  currency: null
+  billing_period: null
+  pricing_text: Pay as you go w. minimum monthly fee
+  minimum_fee: undisclosed monthly minimum
+  included_quota: null
+  overage: null
+  onboarding: book a demo
+- name: Enterprise - Advanced
+  audience: up to 10 branches
+  price: null
+  currency: null
+  billing_period: null
+  pricing_text: Pay as you go w. minimum monthly fee (up to 30% discount)
+  minimum_fee: undisclosed monthly minimum
+  included_quota: null
+  overage: null
+  onboarding: book a demo
+- name: Enterprise - Premium
+  audience: more than 10 branches
+  price: null
+  currency: null
+  billing_period: null
+  pricing_text: Pay as you go w. minimum monthly fee (up to 55% discount)
+  minimum_fee: undisclosed monthly minimum
+  included_quota: null
+  overage: null
+  onboarding: book a demo
+evidence:
+- url: https://wavebl.com/pricing-page/
+  status: 200
+  note: >-
+    Four named tiers segmented by branch count, with the stated principle "Flexible pricing that
+    scales with your business — the more you use, the less you pay per unit". No unit price, no
+    currency, no minimum-fee amount and no quota is published for any tier; only the relative
+    discount ceilings (30% / 55%) are stated.
+- url: https://wavebl.com/roi-calculator/
+  status: 200
+  note: >-
+    An ROI calculator is published in place of a rate card; it models savings against courier and
+    document-handling costs, not WaveBL's own per-eBL price.
+note: >-
+  WaveBL publishes a real, structured plan ladder but no numbers. The SMB tier is genuinely
+  self-serve — the sign-up app at register.wavebl.com is live and open — while all three Enterprise
+  tiers route to a demo booking. Prices, minimum fees, included volumes and overage rates are
+  disclosed only in a sales conversation. A Pricing pointer IS emitted because the pricing page
+  exists and is live.

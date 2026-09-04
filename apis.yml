@@ -1,23 +1,151 @@
 aid: wavebl
 name: WaveBL
-description: 'WaveBL is a company surfaced via the API Evangelist harvest backlog (source: secondary-market)
-  and added to the network as a stub for full-pipeline profiling.'
+description: >-
+  WaveBL is an Israeli digital trade platform, headquartered in Kfar Saba and founded out of
+  the ZIM shipping group, that moves original electronic bills of lading (eBLs) and the trade
+  documents around them between carriers, freight forwarders, cargo owners, customs brokers and
+  banks. Its blockchain-backed, peer-to-peer network issues, endorses, transfers, amends and
+  surrenders title documents without a central repository, and is sold as the WaveBL Digital
+  Document Hub, electronic Master and House Bills of Lading, WaveBL for Customs and a trade
+  finance module that presents structured documents to banks. It is used by MSC, ZIM,
+  Hapag-Lloyd, ONE, PIL, Evergreen and Leschaco among others, is approved by the International
+  Group of P&I Clubs, and has implemented the DCSA Standard Annex for eBL Platform
+  Interoperability so eBLs can cross to other platforms. WaveBL runs a real API programme — it
+  states publicly that its platform complies with the DCSA OpenAPI specification for Issuance
+  and the DCSA eBL Surrender Response API — but it operates no developer portal, publishes no
+  API reference, base URL or machine-readable specification, and its only public API article
+  lived on a Zendesk help centre that has since been decommissioned.
+type: Index
+image: https://wavebl.com/wp-content/uploads/2024/05/Logo.svg
 url: https://raw.githubusercontent.com/api-evangelist/wavebl/refs/heads/main/apis.yml
 x-type: company
 x-source: harvest:secondary-market
-x-tier: stub
-x-tier-reason: harvest
 specificationVersion: '0.20'
 created: '2026-09-04'
 modified: '2026-09-04'
 tags:
-- Company
-apis: []
+- Electronic Bill of Lading
+- Digital Trade
+- Trade Documents
+- Trade Finance
+- Ocean Freight
+- Shipping
+- Logistics
+- Supply Chain
+- Maritime
+- Customs
+- Blockchain
+- Freight Forwarding
+- Banking
+- Document Exchange
+apis:
+- aid: wavebl:wavebl-certificate-of-authenticity-api
+  name: WaveBL Certificate of Authenticity API
+  description: >-
+    Undocumented HTTPS API behind WaveBL's public Certificate of Authenticity tool — the free
+    service at coa.wavebl.com that lets any party verify that a bill of lading or trade document
+    was issued and transferred on the WaveBL network. Its existence, base path and two operations
+    are established from WaveBL's own production build: the Angular bundle served at
+    coa.wavebl.com constructs an HTTP client with baseURL "coadocuments" and calls the relative
+    paths "search" and "verify". The surface is an AWS API Gateway fronted by CloudFront — an
+    anonymous GET or OPTIONS to either path returns HTTP 403 {"message":"Missing Authentication
+    Token"} with x-amzn-errortype MissingAuthenticationTokenException and an x-amz-apigw-id
+    header, which is the API Gateway answer for a method not defined on that resource, so only
+    the POST methods the app itself uses are exposed. WaveBL publishes no reference, no OpenAPI
+    and no authentication documentation for it, so no parameters, schemas, error shapes or auth
+    scheme are recorded here. Listed as a measured, undocumented surface.
+  humanURL: https://coa.wavebl.com/
+  baseURL: https://coa.wavebl.com/coadocuments
+  image: https://wavebl.com/wp-content/uploads/2024/05/Logo.svg
+  tags:
+  - Electronic Bill of Lading
+  - Document Exchange
+  - Digital Trade
+  properties:
+  - type: Website
+    url: https://coa.wavebl.com/
+  x-access: undocumented
+  x-evidence:
+    discovered: '2026-09-04'
+    method: probed
+    source: https://coa.wavebl.com/main.e6cb0d051b98470c.js
+    probes:
+    - url: https://coa.wavebl.com/
+      status: 200
+    - url: https://coa.wavebl.com/coadocuments/search
+      status: 403
+    - url: https://coa.wavebl.com/coadocuments/verify
+      status: 403
+    - url: https://coa.wavebl.com/coadocuments
+      status: 403
 maintainers:
 - FN: Kin Lane
   email: kin@apievangelist.com
 - FN: APIs.json
   email: info@apis.io
 common:
+- type: DomainSecurity
+  url: security/wavebl-domain-security.yml
 - type: Website
-  url: https://www.nasdaqprivatemarket.com/
+  url: https://wavebl.com/
+- type: Blog
+  url: https://wavebl.com/blog/
+- type: Support
+  url: https://wsupport.wavebl.com/
+- type: SignUp
+  url: https://register.wavebl.com/wavebl/?trustedOrganizationCode=Generic
+- type: Pricing
+  url: https://wavebl.com/pricing-page/
+- type: TermsOfService
+  url: https://wavebl.com/terms-and-conditions/
+- type: PrivacyPolicy
+  url: https://wavebl.com/privacy-policy/
+- type: Compliance
+  url: https://wavebl.com/wave-bl-achieves-iso-27001-and-27017-compliance-certification/
+- type: Conformance
+  url: conformance/wavebl-conformance.yml
+- type: Authentication
+  url: authentication/wavebl-authentication.yml
+- type: WellKnown
+  url: well-known/wavebl-well-known.yml
+- type: Packages
+  url: packages/wavebl-packages.yml
+- type: Plans
+  url: plans/wavebl-plans-pricing.yml
+- type: RateLimits
+  url: rate-limits/wavebl-rate-limits.yml
+- type: Lifecycle
+  url: lifecycle/wavebl-lifecycle.yml
+- type: LLMsTxt
+  url: llms/wavebl-llms.txt
+x-enrichment:
+  date: '2026-09-04'
+  status: minimal
+  artifacts_added: 11
+  pass: local-v3
+x-coverage:
+  state: gated
+  reason: customer-only-docs
+  detail: >-
+    WaveBL's only public API documentation was a single help-centre article stating that its
+    platform complies with the DCSA eBL Issuance and Surrender Response APIs; that Zendesk help
+    centre has been decommissioned and support.wavebl.com now fails the TLS handshake outright,
+    while its replacement — the Salesforce Experience Cloud community at wsupport.wavebl.com —
+    serves an article sitemap that 404s and answers 401 on every non-public path, so integration
+    material is now reachable only by signed-in customers and partners.
+  evidence:
+  - url: https://support.wavebl.com/hc/en-us/articles/18817090320029-DCSA
+    status: 0
+  - url: https://wsupport.wavebl.com/s/sitemap-topicarticle-1.xml
+    status: 404
+  - url: https://wsupport.wavebl.com/.well-known/api-catalog
+    status: 401
+  - url: https://docs.wavebl.com/openapi.json
+    status: 403
+  - url: https://wavebl.com/llms.txt
+    status: 404
+  - url: https://coa.wavebl.com/coadocuments/search
+    status: 403
+  - url: https://developer.wavebl.com/
+    status: 0
+  checked: '2026-09-04'

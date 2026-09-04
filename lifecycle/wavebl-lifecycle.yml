@@ -1,0 +1,57 @@
+generated: '2026-09-04'
+method: searched
+source: >-
+  Read of every page in the wavebl.com page sitemap, DNS probes for a status host, and the archived
+  WaveBL help-centre category list, on 2026-09-04.
+versioning:
+  scheme: null
+  documented: false
+  note: No API version scheme, version header or versioned base path is published anywhere.
+deprecation_policy:
+  published: false
+  sunset_header: false
+  deprecation_header: false
+  note: >-
+    No deprecation or end-of-life policy exists on any public WaveBL page, and no RFC 8594 Sunset or
+    Deprecation header was observed on any anonymous response. NO Deprecation pointer is emitted.
+status_page:
+  published: false
+  probes:
+  - host: status.wavebl.com
+    result: NXDOMAIN
+  - host: statuspage.wavebl.com
+    result: NXDOMAIN
+  - host: offline.wavebl.com
+    result: resolves to CloudFront — maintenance holding page, not a status page
+  note: >-
+    WaveBL operates no public status page. status.wavebl.com and statuspage.wavebl.com do not
+    resolve. Two maintenance hosts appear in certificate transparency: maintenance.wavebl.com does
+    not resolve, and offline.wavebl.com does (CloudFront) but it is a maintenance-window holding
+    page, not a status page. NO StatusPage pointer is emitted.
+sla:
+  published: false
+  note: >-
+    The terms and conditions are public but state no uptime commitment or credit schedule. "24/7
+    global support" is claimed on marketing pages with no response-time target attached.
+changelog:
+  published: false
+  note: >-
+    A "Product Updates — release notes, product updates and How-To videos" category existed on
+    WaveBL's Zendesk help centre. That help centre has been decommissioned: support.wavebl.com now
+    fails the TLS handshake outright, and the replacement Salesforce Experience Cloud community at
+    wsupport.wavebl.com publishes an empty sitemap (every sub-sitemap it indexes returns 404). There
+    is no live changelog to point at, so no changelog/ artifact and no ChangeLog pointer is written.
+  evidence:
+  - url: https://support.wavebl.com/hc/en-us/categories/14466908973341-Product-Updates
+    status: 0
+    note: TLS handshake failure — SSLV3_ALERT_HANDSHAKE_FAILURE from two independent clients
+  - url: https://wsupport.wavebl.com/s/sitemap.xml
+    status: 200
+    note: sitemap index is served
+  - url: https://wsupport.wavebl.com/s/sitemap-topicarticle-1.xml
+    status: 404
+    note: the article sitemap it indexes does not exist — no public knowledge articles
+deprecated_operations: []
+note: >-
+  A Lifecycle pointer is emitted to record these measurements. No StatusPage, Deprecation or
+  ChangeLog pointer is emitted, because none of those surfaces exists.

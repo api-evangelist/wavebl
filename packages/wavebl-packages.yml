@@ -1,0 +1,68 @@
+generated: '2026-09-04'
+method: searched
+source: >-
+  Unauthenticated registry searches on 2026-09-04 across npm, PyPI, RubyGems, crates.io, NuGet,
+  Packagist and Maven Central, plus a read of every page in the wavebl.com Yoast page sitemap (67
+  URLs) and the archived WaveBL help-centre "API Integrations" section for an SDK or client-library
+  link.
+package_count: 0
+official_package_count: 0
+packages: []
+registries_searched:
+- registry: npm
+  query: https://registry.npmjs.org/-/v1/search?text=wavebl&size=20
+  result: 0 packages returned
+  version: null
+- registry: pypi
+  query: https://pypi.org/pypi/wavebl/json
+  status: 404
+  result: no project named wavebl
+  version: null
+- registry: rubygems
+  query: https://rubygems.org/api/v1/search.json?query=wavebl
+  result: empty array
+  version: null
+- registry: crates.io
+  query: https://crates.io/api/v1/crates?q=wavebl
+  result: total 0
+  version: null
+- registry: nuget
+  query: https://azuresearch-usnc.nuget.org/query?q=wavebl
+  result: totalHits 0
+  version: null
+- registry: packagist
+  query: https://packagist.org/search.json?q=wavebl
+  result: >-
+    8 results, all unrelated (ardzz/wavel, wavelabs/*, wavelo/*, daveblake/password-strength) —
+    none published by WaveBL
+  version: null
+- registry: maven-central
+  query: https://search.maven.org/solrsearch/select?q=wavebl
+  result: no WaveBL coordinate
+  version: null
+- registry: pkg.go.dev
+  result: not a searchable index; no Go module is referenced from any WaveBL page
+  version: null
+- registry: cdn
+  result: >-
+    No script tag, unpkg or jsDelivr URL for a WaveBL-published build appears on any WaveBL page.
+    The only first-party JavaScript WaveBL serves is the application bundles of its own web apps
+    (coa.wavebl.com, register.wavebl.com, ib.prod.wavebl.com), which are content-hash-named
+    application code, not a distributed client library.
+  version: null
+github_org:
+  url: https://github.com/wavebl
+  status: 200
+  created: '2021-04-18'
+  public_repos: 0
+  note: >-
+    The github.com/wavebl organization exists and is almost certainly WaveBL's, but it has 0 public
+    repositories, no display name, no description and no blog URL. There is nothing in it to mine
+    for a package and nothing to point a GitHubOrganization pointer at that a developer could use,
+    so no pointer is emitted.
+note: >-
+  WaveBL publishes no first-party client library in any public package registry and links to no SDK
+  or client library from any public page. Integration is described only as "API integration with
+  legacy systems" on marketing pages and, in the archived help centre, as conformance to the DCSA
+  eBL specifications — partners integrate against DCSA's published contracts, not against a WaveBL
+  SDK. This is a measured zero, not an unchecked field. NO SDKs pointer is emitted.

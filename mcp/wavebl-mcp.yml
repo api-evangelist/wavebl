@@ -1,0 +1,33 @@
+generated: '2026-09-04'
+method: probed
+status: none
+source: >-
+  DNS and HTTP probes on 2026-09-04 against mcp.wavebl.com, wavebl.com/mcp and
+  coa.wavebl.com/coadocuments/mcp, plus a web search for a published WaveBL MCP server or stdio
+  package.
+deployment:
+  mode: none
+  auth: unknown
+  verified: probed
+server: null
+tools: []
+probes:
+- url: https://mcp.wavebl.com/mcp
+  method: POST tools/list
+  result: DNS NXDOMAIN — host does not resolve
+- url: https://wavebl.com/mcp
+  method: POST tools/list
+  status: 404
+  result: WordPress 404 template
+- url: https://coa.wavebl.com/coadocuments/mcp
+  method: POST tools/list
+  status: 403
+  result: >-
+    CloudFront rejected the POST with an HTML 403 error page before it reached the origin — the
+    host is the Certificate of Authenticity API surface, not an MCP endpoint
+note: >-
+  WaveBL ships no hosted MCP server and no stdio MCP package, and publishes no OpenAPI from which a
+  candidate tool list could be derived, so no candidate tools are listed. mode is none and NO
+  MCPServer pointer is emitted in apis.yml. No tool crosswalk is written either — a crosswalk needs
+  an MCP or GraphQL surface AND an OpenAPI, and WaveBL has neither. This file records that the probe
+  ran and missed.

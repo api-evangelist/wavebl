@@ -1,0 +1,155 @@
+generated: '2026-09-04'
+method: searched
+source: >-
+  WaveBL's own help-centre article "DCSA" in the API Integrations section (archived), the DCSA
+  newsroom, WaveBL's ISO certification announcement, and anonymous probes of every WaveBL host on
+  2026-09-04.
+summary: >-
+  WaveBL publishes no machine-readable contract of its own, so no cross-cutting standard can be
+  asserted from a spec. What it does publish is an explicit, first-party conformance claim against
+  its market's domain standard: the DCSA electronic bill of lading specifications. That claim is
+  recorded here with the exact wording and the URL it was published at, and it is corroborated by
+  DCSA's own newsroom. Everything else below was probed and missed.
+standards:
+- id: oauth2
+  conforms: partial
+  evidence: >-
+    No OpenAPI securitySchemes exist to read. WaveBL's production platform login
+    (ib.prod.wavebl.com) is an AWS Amplify Identity Broker over Amazon Cognito user pools using the
+    OAuth 2.0 authorization-code flow — its own bundle declares responseType "code" and the scope
+    set phone/email/openid/profile/aws.cognito.signin.user.admin. That is a real OAuth 2.0
+    deployment for end-user sign-in, but it is not documented anywhere by WaveBL and no API
+    authorization scheme is published.
+- id: oidc
+  conforms: true
+  evidence: >-
+    https://wsupport.wavebl.com/.well-known/openid-configuration returns HTTP 200 with a complete
+    OpenID Connect discovery document (issuer https://wsupport.wavebl.com, authorization, token,
+    userinfo, revocation, introspection and registration endpoints, jwks_uri, RS256 id_token
+    signing, DPoP algorithms, private_key_jwt client auth). This is the Salesforce Experience Cloud
+    identity surface behind WaveBL's support community, served on a WaveBL-controlled host.
+- id: rfc8414-oauth-authorization-server
+  conforms: false
+  evidence: >-
+    /.well-known/oauth-authorization-server is absent on every WaveBL host (404 on the apex, 401 on
+    wsupport, 403 on the S3/CloudFront origins) — see well-known/wavebl-well-known.yml.
+- id: rfc9728-oauth-protected-resource
+  conforms: false
+  evidence: no /.well-known/oauth-protected-resource document on any host
+- id: rfc9457-problem-details
+  conforms: false
+  evidence: >-
+    The one reachable WaveBL API surface, https://coa.wavebl.com/coadocuments/*, returns
+    application/json {"message":"Missing Authentication Token"} — the AWS API Gateway envelope, not
+    application/problem+json.
+- id: rfc9116-security-txt
+  conforms: false
+  evidence: /.well-known/security.txt returns 404 on wavebl.com and is absent on every other host
+- id: rfc8615-well-known-uris
+  conforms: true
+  evidence: >-
+    One well-known URI is served — /.well-known/openid-configuration on wsupport.wavebl.com (HTTP
+    200, application/json).
+- id: rfc8594-sunset-header
+  conforms: false
+  evidence: >-
+    No deprecation or sunset policy is published; no Sunset or Deprecation header was observed on
+    any anonymous response.
+domain_standards:
+  note: >-
+    Ocean-freight documentation has a real, active domain standard — the DCSA (Digital Container
+    Shipping Association) electronic bill of lading specification family, plus the UNCITRAL Model
+    Law on Electronic Transferable Records (MLETR) as the legal frame beneath it. REWARD-ONLY: an
+    absence here is not a penalty. WaveBL states conformance explicitly, in its own words, on its
+    own help centre.
+  claims:
+  - id: dcsa-ebl-issuance
+    name: DCSA OpenAPI specification for Issuance
+    conforms: true
+    claimed_by: provider
+    evidence: >-
+      WaveBL help-centre article "DCSA", filed under the API Integrations section, states verbatim:
+      "Our platform fully complies with 'DCSA OpenAPI specification for Issuance' and 'DCSA EBL
+      Surrender Response API'", and links to https://developer.dcsa.org/ebl. Published at
+      https://support.wavebl.com/hc/en-us/articles/18817090320029-DCSA (last updated 2025-03-27);
+      that Zendesk help centre has since been decommissioned and the URL no longer resolves, so the
+      claim is cited from the Internet Archive capture of 2025-09-07.
+    evidence_url: https://web.archive.org/web/20250907044103/https://support.wavebl.com/hc/en-us/articles/18817090320029-DCSA
+    verified_against_contract: false
+    verification_note: >-
+      This is a PROSE claim, not a contract signature. WaveBL publishes no OpenAPI of its own, so it
+      cannot be confirmed that a WaveBL endpoint implements the DCSA Issuance paths. DCSA's own
+      OpenAPI is NOT saved into this repository — it belongs to DCSA, not to WaveBL, and saving it
+      here would credit WaveBL with a contract it did not publish.
+  - id: dcsa-ebl-surrender-response
+    name: DCSA eBL Surrender Response API
+    conforms: true
+    claimed_by: provider
+    evidence: same help-centre article as dcsa-ebl-issuance
+    evidence_url: https://web.archive.org/web/20250907044103/https://support.wavebl.com/hc/en-us/articles/18817090320029-DCSA
+    verified_against_contract: false
+  - id: dcsa-pint-interoperability
+    name: DCSA Standard Annex for eBL Platform Interoperability (PINT) v2
+    conforms: true
+    claimed_by: third-party
+    evidence: >-
+      DCSA names WaveBL as one of five eBL platforms that implemented the Standard Annex for eBL
+      Platform Interoperability v2 and received International Group of P&I Clubs approval, and
+      reports the first standards-based interoperable eBL transfer involving WaveBL. The PINT API
+      is the transfer contract between platforms; WaveBL operates an endpoint for it, but that
+      endpoint is partner-provisioned and is not published.
+    evidence_url: https://dcsa.org/newsroom/five-ebl-platforms-adopt-dcsa-interoperability-annex
+    verified_against_contract: false
+  - id: uncitral-mletr
+    name: UNCITRAL Model Law on Electronic Transferable Records
+    conforms: true
+    claimed_by: provider
+    evidence: >-
+      WaveBL carries the UNCITRAL mark on its own homepage alongside the DCSA, IGP&I and ITFA marks
+      and describes its eBLs as legally equivalent originals under MLETR-aligned regimes. A legal
+      framework, not a machine-readable contract — recorded for completeness, not scored as a
+      technical conformance.
+    evidence_url: https://wavebl.com/
+    verified_against_contract: false
+  - id: swift
+    name: SWIFT network connectivity for bank presentation
+    conforms: unverified
+    claimed_by: provider
+    evidence: >-
+      WaveBL announces a completed "Network Connectivity Proof of Value with Swift" involving five
+      global banks and MSC. A proof of value, not a shipped, documented integration contract — so
+      recorded as unverified rather than true.
+    evidence_url: https://wavebl.com/overview/
+    verified_against_contract: false
+compliance_program:
+  published: true
+  certifications:
+  - id: iso-27001
+    name: ISO/IEC 27001
+    status: certified
+    certifying_body: The Standards Institution of Israel, accredited by the ANSI National Accreditation Board
+    evidence_url: https://wavebl.com/wave-bl-achieves-iso-27001-and-27017-compliance-certification/
+  - id: iso-27017
+    name: ISO/IEC 27017
+    status: certified
+    certifying_body: The Standards Institution of Israel, accredited by the ANSI National Accreditation Board
+    evidence_url: https://wavebl.com/wave-bl-achieves-iso-27001-and-27017-compliance-certification/
+  - id: igpi-approval
+    name: International Group of P&I Clubs approval of the WaveBL eBL system
+    status: approved
+    evidence_url: https://wavebl.com/
+    note: >-
+      Not an information-security certification — the liability-cover approval that makes a WaveBL
+      eBL acceptable to marine insurers. Recorded because it is the gate that matters commercially
+      in this market.
+  trust_center: null
+  evidence: >-
+    WaveBL published a named, dated certification announcement on its own domain (HTTP 200) naming
+    both ISO/IEC 27001 and ISO/IEC 27017 and the accrediting bodies, and it renders ISO 27001 and
+    ISO 27017 shield icons on its homepage
+    (wp-content/uploads/2026/06/iso-27001-shield-icon.png, iso-27017-shield-icon.png). It operates
+    no trust center: trust.wavebl.com and security.wavebl.com do not resolve, and
+    https://wavebl.com/security/ is a marketing page that names no framework.
+  pointer_policy: >-
+    A Compliance pointer IS emitted against the certification announcement — the certifications are
+    named, dated and first-party. NO TrustCenter pointer is emitted: there is no trust center.

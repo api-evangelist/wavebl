@@ -64,5 +64,18 @@
 > Full detail: **[Where this data comes from](https://apievangelist.com/about/where-our-data-comes-from)**
 <!-- API-EVANGELIST-PROVENANCE:END -->
 
-WaveBL is a company surfaced via the API Evangelist harvest backlog (source: secondary-market) and added to the network as a stub for full-pipeline profiling.
-- https://www.nasdaqprivatemarket.com/
+WaveBL is an Israeli digital trade platform, headquartered in Kfar Saba, that moves original
+electronic bills of lading (eBLs) and the trade documents around them between ocean carriers,
+freight forwarders, cargo owners, customs brokers and banks over a blockchain-backed peer-to-peer
+network. It is used by MSC, ZIM, Hapag-Lloyd, ONE, PIL, Evergreen and Leschaco, is approved by the
+International Group of P&I Clubs, and has implemented the DCSA Standard Annex for eBL Platform
+Interoperability.
+
+WaveBL states publicly that its platform complies with the DCSA OpenAPI specification for Issuance
+and the DCSA eBL Surrender Response API, but it operates no developer portal and publishes no API
+reference, base URL or machine-readable specification of its own. This profile records what is
+publicly measurable; see `x-coverage` in `apis.yml` for why it is thin.
+
+- https://wavebl.com/
+- https://coa.wavebl.com/
+- https://wsupport.wavebl.com/
