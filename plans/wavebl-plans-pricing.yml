@@ -65,3 +65,33 @@ note: >-
   tiers route to a demo booking. Prices, minimum fees, included volumes and overage rates are
   disclosed only in a sales conversation. A Pricing pointer IS emitted because the pricing page
   exists and is live.
+x-canonical:
+  generated: '2026-10-08'
+  vocabulary: all/0-working/economics/plans-canonical.yml
+  models: []
+  units: []
+  plans:
+  - name: SMB
+    access: other
+    model: unstated
+    model_how: derived
+    units: []
+    periods: []
+  - name: Enterprise - Basic
+    access: other
+    model: unstated
+    model_how: derived
+    units: []
+    periods: []
+  - name: Enterprise - Advanced
+    access: other
+    model: unstated
+    model_how: derived
+    units: []
+    periods: []
+  - name: Enterprise - Premium
+    access: other
+    model: unstated
+    model_how: derived
+    units: []
+    periods: []
