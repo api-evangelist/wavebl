@@ -1,0 +1,16 @@
+generated: '2026-10-12'
+method: none
+source:
+- https://zapier.com/apps/wavebl/integrations
+- https://n8n.io/integrations/wavebl/
+- https://composio.dev/toolkits/wavebl
+- https://monid.ai/tools/wavebl
+checked:
+- https://composio.dev/toolkits/wavebl
+- https://monid.ai/tools/wavebl
+- https://n8n.io/integrations/wavebl/
+- https://zapier.com/apps/wavebl/integrations
+summary: null
+marketplace_apps: []
+edges: []
+templates: []
