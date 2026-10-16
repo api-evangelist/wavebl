@@ -2,7 +2,7 @@
   "repo": "wavebl",
   "feeds": [
     {
-      "source": "https://wavebl.com/",
+      "source": "https://wavebl.com/blog/",
       "feed_url": "https://wavebl.com/blog/feed/",
       "title": "",
       "saved": 0,
@@ -16,6 +16,6 @@
       "method": "feed"
     }
   ],
-  "post_count": 11,
-  "fetched": "2026-10-03T12:30:02Z"
+  "post_count": 12,
+  "fetched": "2026-10-10T13:15:00Z"
 }
